@@ -1,74 +1,66 @@
 import React, {Component} from 'react';
-import NewTask from "./components/NewTask.js";
+import TasksList from './components/TasksList.js';
+import './App.css';
+import InputForm from "./components/InputForm";
+import image from './assets/ic-remove.png';
+
 
 class App extends Component {
-  state = {
-    toDoList: [
-      { text: 'Buy milk'},
-      { text: 'Do homework'}
-      ],
-    showToDoList: true
-  };
+    state = {
+        inputText: [
+            "buy Milk",
+            "do Home Work",
+            "Walk with a dog"
+        ]
+    };
+    beforeRenderText;
+    image = image;
 
-  addTask = (event, index) => {
-    const toDoListCopy = this.state.ToDoList;
+    keepNewText = (event) => {
+        this.beforeRenderText = event.target.value;
+    };
 
-    toDoListCopy.text = event.target.value;
-    toDoListCopy.id = event.target.id;
-    toDoListCopy.push(NewTask);
+    addNewText = () => {
+        if (this.beforeRenderText) {
+            const copy = this.state.inputText;
+            let newText = this.beforeRenderText;
+            copy.push(newText);
+            this.setState({copy});
+            console.log(this.state.inputText);
+        }
+    };
 
-    this.setState({toDoList: toDoListCopy});
-  };
-
-  increaseAge = id => {
-    const index = this.state.toDoList.findIndex(task => task.id === id);
-
-    const toDoList = [...this.state.toDoList];
-    const task = {...this.state.toDoList[index]};
-
-
-    toDoList[index] = task;
-
-    this.setState({toDoList});
-  };
-
-  removeTask = index => {
-    const toDoListCopy = this.state.toDoList;
-    toDoListCopy.splice(index, 1);
-
-    this.setState({toDoList: toDoListCopy});
-  };
-
-  toggleTask = () => {
-    this.setState({
-      showToDoList: !this.state.showToDoList
-    });
-  };
-
-  render() {
-    let toDoList = null;
-
-    if (this.state.showToDoList) {
-      toDoList = this.state.toDoList.map((task, index) => (
-        <NewTask
-          text={task}
-          id={index}
-          onClick={() => this.increaseAge(task.index)}
-          onChange={event => this.addTask(event, index)}
-          remove={() => this.removeTask(index)}>
-        </NewTask>
-      ));
+    delete(event) {
+        const id = event.target.id;
+        const copy = this.state.inputText;
+        copy.splice(id, 1);
+        this.setState({copy});
+        console.log(event.target);
     }
 
-    return (
-      <div className="App">
-        <div>
-          <button onClick={this.toggleTask}>Toggle toDoList</button>
-        </div>
-        {toDoList}
-      </div>
-    );
-  }
+    render() {
+        return (
+            <div className="App grid-container">
+                <InputForm onChange={(event) => {
+                    this.keepNewText(event)
+                }} onClick={this.addNewText}/>
+                <div className="list-block">
+                    {this.state.inputText.map((text, key) => {
+                        return <TasksList image={this.image} key={key} id={key} text={text} onClick={(event) => {
+                            this.delete(event)
+                        }} check={(event) => {
+                            if (event.currentTarget.parentNode.parentNode.className === 'task-text') {
+                                event.currentTarget.parentNode.parentNode.className = 'task-text green';
+                            } else {
+                                event.currentTarget.parentNode.parentNode.className = 'task-text';
+                            }
+                        }}/>
+                    })}
+
+                </div>
+            </div>
+        )
+    }
 }
 
 export default App;

@@ -1,32 +1,49 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.grid-container {
+  display: grid;
+  grid-gap: 10px;
+  padding: 10px;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  grid-template-columns: auto;
+}
+ div {
+     border: 1px solid blue;
+     border-radius: 5px;
+ }
+
+.btn-dlt {
+    display: inline-grid;
+    width: 20px;
+    height: 20px;
+    justify-self: end;
+    cursor: pointer;
+    box-shadow: 2px 2px 1px 0px rgba(50, 50, 50, 0.75);
+    border: 1px solid darkgrey;
 }
 
-.App-link {
-  color: #61dafb;
+.btn-dlt:active {
+    box-shadow: 0px 0px 0px 0px;
+    transform: translateY(2px);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.task {
+    padding: 5px;
+    border: none;
+}
+.input_form,
+.green {
+    background: greenyellow;
+}
+
+.input_form,
+.list-block,
+.task-text {
+    padding: 10px;
+    box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+}
+
+.checkBox {
+    border: none;
+    width: fit-content;
+    margin: 10px;
+    display: inline;
 }
